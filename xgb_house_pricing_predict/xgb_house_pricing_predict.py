@@ -7,6 +7,7 @@ Created on TODAY
 
 import numpy as np
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
 import xgboost as xgb
 from sklearn.linear_model import Ridge
@@ -91,11 +92,17 @@ def predict(alg, X_test, y_test):
     print "\nTest:"
     y_test_prediction = alg.predict(X_test)
     
-    #plt.plot(range(len(y_test)), y_test, 'go')
-    count = len(y_test)
-    x_axis = range(count)
-    # plt.plot(x_axis, y_test, 'go', x_axis, y_test_prediction, 'rs')
-    plt.plot(x_axis, y_test_prediction - y_test, 'r', x_axis, np.zeros(count), 'g')
+    matplotlib.rc('xtick', labelsize=30) 
+    matplotlib.rc('ytick', labelsize=30) 
+
+    fig, ax = plt.subplots(figsize=(50, 40))
+    
+    plt.style.use('ggplot')
+    plt.plot(y_test_prediction, y_test, 'ro')
+    plt.xlabel('Predictions', fontsize = 30)
+    plt.ylabel('Reality', fontsize = 30)
+    plt.title('Predictions x Reality on dataset Test', fontsize = 30)
+    ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=4)
     plt.show()
 
 # Various hyper-parameters to tune
